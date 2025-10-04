@@ -5,7 +5,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.msansar.ReportingAPI.model.User;
+import com.msansar.ReportingAPI.model.Merchant;
 import com.msansar.ReportingAPI.repository.AuthRepository;
 
 @Service
@@ -19,7 +19,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = authRepository.findByEmail(email)
+        Merchant user = authRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email)); // TODO: Custom exception ile değiştirilecek
         
         return org.springframework.security.core.userdetails.User.builder()

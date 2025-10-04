@@ -34,8 +34,4 @@ public class AuthController {
     public ResponseEntity<RegisterResponse> register(@RequestBody @Valid RegisterRequest registerRequest) {
         return authService.register(registerRequest);
     }
-    @GetMapping("/test")
-    public ResponseEntity<String> test() {
-        return ResponseEntity.ok("Test endpoint çalışıyor!");
-    }
 }

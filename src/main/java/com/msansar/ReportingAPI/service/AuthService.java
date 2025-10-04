@@ -8,7 +8,7 @@ import com.msansar.ReportingAPI.dto.auth.LoginRequest;
 import com.msansar.ReportingAPI.dto.auth.LoginResponse;
 import com.msansar.ReportingAPI.dto.auth.RegisterRequest;
 import com.msansar.ReportingAPI.dto.auth.RegisterResponse;
-import com.msansar.ReportingAPI.model.User;
+import com.msansar.ReportingAPI.model.Merchant;
 import com.msansar.ReportingAPI.repository.AuthRepository;
 import com.msansar.ReportingAPI.enums.Status;
 import com.msansar.ReportingAPI.util.JwtUtil;
@@ -26,7 +26,7 @@ public class AuthService {
     }
 
     public ResponseEntity<LoginResponse> login(LoginRequest loginRequest) {
-        User user = authRepository
+        Merchant user = authRepository
                 .findByEmail(loginRequest.email())
                 .orElseThrow(() -> new RuntimeException("User not found")); // TODO: UserNotFoundException ile değiştirilecek
         
@@ -41,7 +41,7 @@ public class AuthService {
 
     public ResponseEntity<RegisterResponse> register(RegisterRequest registerRequest) {
         String hashedPassword = passwordEncoder.encode(registerRequest.password());
-        User user = new User(registerRequest.email(), hashedPassword);
+        Merchant user = new Merchant(registerRequest.email(), hashedPassword);
         authRepository.save(user);
         RegisterResponse registerResponse = new RegisterResponse(registerRequest.email(), Status.APPROVED);
         return ResponseEntity.ok(registerResponse); // TODO: RegisterResponse'u düzeltilebilir.
