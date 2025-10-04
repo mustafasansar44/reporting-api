@@ -1,0 +1,5 @@
+package com.msansar.ReportingAPI.dto.auth;
+
+import com.msansar.ReportingAPI.enums.Status;
+
+public record RegisterResponse(String email, String password, Status status) {}
