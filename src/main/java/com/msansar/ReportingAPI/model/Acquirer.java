@@ -25,6 +25,7 @@ public class Acquirer {
 
     @Column(nullable = false)
     private String name;
+    private String code;
 
     @OneToMany(mappedBy = "acquirer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Transaction> transactions;

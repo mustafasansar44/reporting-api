@@ -16,26 +16,33 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "merchants")
+@Table(name = "customers")
 @NoArgsConstructor
-public class Merchant {
+public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "card_number")
+    private String number;
+
+    @Column(nullable = false)
     private String email;
 
-    private String name;
-    private String referenceNo;
-    @Column(nullable = false)
-    private String password;
+    @Column(name = "billing_first_name")
+    private String billingFirstName;
 
-    @OneToMany(mappedBy = "merchant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Column(name = "billing_last_name")
+    private String billingLastName;
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Transaction> transactions;
 
-    public Merchant(String email, String password) {
+    public Customer(String number, String email, String billingFirstName, String billingLastName) {
+        this.number = number;
         this.email = email;
-        this.password = password;
+        this.billingFirstName = billingFirstName;
+        this.billingLastName = billingLastName;
     }
 }
+

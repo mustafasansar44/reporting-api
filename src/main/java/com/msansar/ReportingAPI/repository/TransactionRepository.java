@@ -3,6 +3,8 @@ package com.msansar.ReportingAPI.repository;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -22,4 +24,16 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
             @Param("toDate") Date toDate,
             @Param("merchantId") Long merchantId,
             @Param("acquirerId") Long acquirerId);
+
+    @Query("SELECT t FROM Transaction t " +
+            "WHERE t.createdAt >= COALESCE(:fromDate, t.createdAt) " +
+            "AND t.createdAt <= COALESCE(:toDate, t.createdAt) " +
+            "AND t.merchant.id = COALESCE(:merchantId, t.merchant.id) " +
+            "AND t.acquirer.id = COALESCE(:acquirerId, t.acquirer.id)")
+    Page<Transaction> findTransactions(
+            @Param("fromDate") Date fromDate,
+            @Param("toDate") Date toDate,
+            @Param("merchantId") Long merchantId,
+            @Param("acquirerId") Long acquirerId,
+            Pageable pageable);
 }
