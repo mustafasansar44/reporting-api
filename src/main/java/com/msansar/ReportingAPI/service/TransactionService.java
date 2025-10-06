@@ -42,19 +42,7 @@ public class TransactionService {
                 request.acquirerId()
         );
 
-        List<TransactionReport> responseList = reports.stream()
-                .map(report -> {
-                    return new TransactionReport(
-                            report.currency(),
-                            report.amount(),
-                            report.count()
-                    );
-                })
-                .collect(Collectors.toList());
-
-        return new TransactionReportResponse(
-                Status.APPROVED,
-                responseList);
+        return new TransactionReportResponse(Status.APPROVED, reports);
     }
 
     public TransactionQueryResponse listTransactions(TransactionQueryRequest request, String baseUrl) {
