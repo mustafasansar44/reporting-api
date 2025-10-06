@@ -1,5 +1,7 @@
 package com.msansar.ReportingAPI.dto.transaction;
 
+import com.msansar.ReportingAPI.enums.ErrorCode;
+
 public record TransactionQueryItem(
         MerchantFx merchantFx,
         CustomerInfo customerInfo,
@@ -7,7 +9,8 @@ public record TransactionQueryItem(
         Ipn ipn,
         TransactionInfo transaction,
         AcquirerInfo acquirer,
-        Boolean refundable
+        Boolean refundable,
+        ErrorCode errorCode
 ) {}
 
 

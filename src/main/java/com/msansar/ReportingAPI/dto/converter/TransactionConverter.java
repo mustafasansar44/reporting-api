@@ -37,7 +37,8 @@ public class TransactionConverter {
                 ipn,
                 transactionInfo,
                 acquirerInfo,
-                transaction.getRefundable());
+                transaction.getRefundable(),
+                transaction.getErrorCode());
     }
 
 }

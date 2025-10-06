@@ -10,6 +10,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.msansar.ReportingAPI.dto.transaction.TransactionReport;
+import com.msansar.ReportingAPI.enums.ErrorCode;
+import com.msansar.ReportingAPI.enums.Operation;
+import com.msansar.ReportingAPI.enums.PaymentMethod;
 import com.msansar.ReportingAPI.model.Transaction;
 
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
@@ -29,11 +32,25 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
             "WHERE t.createdAt >= COALESCE(:fromDate, t.createdAt) " +
             "AND t.createdAt <= COALESCE(:toDate, t.createdAt) " +
             "AND t.merchant.id = COALESCE(:merchantId, t.merchant.id) " +
-            "AND t.acquirer.id = COALESCE(:acquirerId, t.acquirer.id)")
+            "AND t.acquirer.id = COALESCE(:acquirerId, t.acquirer.id) " +
+            "AND (:operation IS NULL OR t.operation = :operation) " +
+            "AND (:paymentMethod IS NULL OR t.paymentMethod = :paymentMethod) " +
+            "AND (:errorCode IS NULL OR t.errorCode = :errorCode) " +
+            "AND (:transactionUuid IS NULL OR CAST(t.id AS string) = :transactionUuid) " +
+            "AND (:customerEmail IS NULL OR t.customer.email = :customerEmail) " +
+            "AND (:referenceNo IS NULL OR t.merchant.referenceNo = :referenceNo) " +
+            "AND (:cardPan IS NULL OR t.customer.number = :cardPan)")
     Page<Transaction> findTransactions(
             @Param("fromDate") Date fromDate,
             @Param("toDate") Date toDate,
             @Param("merchantId") Long merchantId,
             @Param("acquirerId") Long acquirerId,
+            @Param("operation") Operation operation,
+            @Param("paymentMethod") PaymentMethod paymentMethod,
+            @Param("errorCode") ErrorCode errorCode,
+            @Param("transactionUuid") String transactionUuid,
+            @Param("customerEmail") String customerEmail,
+            @Param("referenceNo") String referenceNo,
+            @Param("cardPan") String cardPan,
             Pageable pageable);
 }

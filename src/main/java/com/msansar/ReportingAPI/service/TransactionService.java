@@ -3,6 +3,7 @@ package com.msansar.ReportingAPI.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.msansar.ReportingAPI.dto.FilterParams;
 import com.msansar.ReportingAPI.dto.converter.TransactionConverter;
 import com.msansar.ReportingAPI.dto.transaction.TransactionQueryItem;
 import com.msansar.ReportingAPI.dto.transaction.TransactionQueryRequest;
@@ -10,6 +11,7 @@ import com.msansar.ReportingAPI.dto.transaction.TransactionQueryResponse;
 import com.msansar.ReportingAPI.dto.transaction.TransactionReport;
 import com.msansar.ReportingAPI.dto.transaction.TransactionReportRequest;
 import com.msansar.ReportingAPI.dto.transaction.TransactionReportResponse;
+import com.msansar.ReportingAPI.enums.FilterField;
 import com.msansar.ReportingAPI.enums.Status;
 import com.msansar.ReportingAPI.repository.TransactionRepository;
 import org.springframework.data.domain.Page;
@@ -60,11 +62,20 @@ public class TransactionService {
         int pageIndex = (request.page() != null && request.page() > 0) ? request.page() - 1 : 0;
         Pageable pageable = PageRequest.of(pageIndex, perPage);
 
+        FilterParams filterParams = extractFilterParams(request.filterField(), request.filterValue());
+
         Page<Transaction> page = transactionRepository.findTransactions(
                 request.fromDate(),
                 request.toDate(),
                 request.merchantId(),
                 request.acquirerId(),
+                request.operation(),
+                request.paymentMethod(),
+                request.errorCode(),
+                filterParams.transactionUuid(),
+                filterParams.customerEmail(),
+                filterParams.referenceNo(),
+                filterParams.cardPan(),
                 pageable);
 
         List<TransactionQueryItem> items = page.getContent().stream()
@@ -79,4 +90,22 @@ public class TransactionService {
 
         return new TransactionQueryResponse(perPage, currentPage, nextUrl, prevUrl, from, to, items);
     }
+
+    /**
+     * FilterField ve filterValue parametrelerine göre filtreleme parametrelerini hazırlar
+     */
+    private FilterParams extractFilterParams(FilterField filterField, String filterValue) {
+        if (filterField == null || filterValue == null) {
+            return new FilterParams(null, null, null, null);
+        }
+
+        return switch (filterField) {
+            case TRANSACTION_UUID -> new FilterParams(filterValue, null, null, null);
+            case CUSTOMER_EMAIL -> new FilterParams(null, filterValue, null, null);
+            case REFERENCE_NO -> new FilterParams(null, null, filterValue, null);
+            case CARD_PAN -> new FilterParams(null, null, null, filterValue);
+            case CUSTOM_DATA -> new FilterParams(null, null, null, null);
+        };
+    }
+
 }

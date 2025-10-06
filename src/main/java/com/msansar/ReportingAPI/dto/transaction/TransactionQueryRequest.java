@@ -2,6 +2,7 @@ package com.msansar.ReportingAPI.dto.transaction;
 
 import java.util.Date;
 
+import com.msansar.ReportingAPI.enums.ErrorCode;
 import com.msansar.ReportingAPI.enums.FilterField;
 import com.msansar.ReportingAPI.enums.Operation;
 import com.msansar.ReportingAPI.enums.PaymentMethod;
@@ -18,7 +19,7 @@ public record TransactionQueryRequest(
         Long merchantId,
         Long acquirerId,
         PaymentMethod paymentMethod,
-        String errorCode,
+        ErrorCode errorCode,
         FilterField filterField,
         String filterValue,
         Integer page,

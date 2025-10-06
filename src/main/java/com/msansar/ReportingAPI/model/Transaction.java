@@ -3,6 +3,7 @@ package com.msansar.ReportingAPI.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.msansar.ReportingAPI.enums.ErrorCode;
 import com.msansar.ReportingAPI.enums.Operation;
 import com.msansar.ReportingAPI.enums.PaymentMethod;
 
@@ -35,7 +36,9 @@ public class Transaction {
     private PaymentMethod paymentMethod;
     private Boolean received = false;
     private Boolean refundable = false;
-    
+    @Enumerated(EnumType.STRING)
+    private ErrorCode errorCode;
+
     @ManyToOne
     @JoinColumn(name = "merchant_id", nullable = false)
     private Merchant merchant;
