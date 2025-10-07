@@ -12,7 +12,11 @@ import com.msansar.ReportingAPI.dto.dto.request.TransactionQueryRequest;
 import com.msansar.ReportingAPI.dto.dto.response.TransactionQueryResponse;
 import com.msansar.ReportingAPI.dto.dto.request.TransactionReportRequest;
 import com.msansar.ReportingAPI.dto.dto.response.TransactionReportResponse;
+import com.msansar.ReportingAPI.dto.dto.request.ClientRequest;
+import com.msansar.ReportingAPI.dto.dto.response.ClientResponse;
 import com.msansar.ReportingAPI.service.TransactionService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v3")
@@ -24,22 +28,28 @@ public class TransactionController {
         this.transactionService = transactionService;
     }
 
-    @PostMapping("/transactions/client")
-    public ResponseEntity<TransactionGetResponse> getTransaction(@RequestBody TransactionGetRequest requestBody) {
+    @PostMapping("/transaction")
+    public ResponseEntity<TransactionGetResponse> getTransaction(@Valid @RequestBody TransactionGetRequest requestBody) {
         TransactionGetResponse response = transactionService.getTransaction(requestBody);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/transactions/report")
-    public ResponseEntity<TransactionReportResponse> getTransactionReport(@RequestBody TransactionReportRequest requestBody) {
+    public ResponseEntity<TransactionReportResponse> getTransactionReport(@Valid @RequestBody TransactionReportRequest requestBody) {
         TransactionReportResponse report = transactionService.getTransactionReport(requestBody);
         return ResponseEntity.ok(report);
     }
 
     @PostMapping("/transactions/list")
-    public ResponseEntity<TransactionQueryResponse> list(@RequestBody TransactionQueryRequest requestBody) {
+    public ResponseEntity<TransactionQueryResponse> list(@Valid @RequestBody TransactionQueryRequest requestBody) {
         TransactionQueryResponse resp = transactionService.listTransactions(requestBody, "/api/v3/transactions/list");
         return ResponseEntity.ok(resp);
+    }
+
+    @PostMapping("/client")
+    public ResponseEntity<ClientResponse> getClient(@Valid @RequestBody ClientRequest requestBody) {
+        ClientResponse response = transactionService.getClient(requestBody);
+        return ResponseEntity.ok(response);
     }
 
 }

@@ -9,6 +9,7 @@ import com.msansar.ReportingAPI.dto.dto.transaction.MerchantInfo;
 import com.msansar.ReportingAPI.dto.dto.transaction.AcquirerInfo;
 import com.msansar.ReportingAPI.dto.dto.transaction.TransactionQueryItem;
 import com.msansar.ReportingAPI.dto.dto.response.TransactionGetResponse;
+import com.msansar.ReportingAPI.dto.dto.response.ClientResponse;
 
 public class TransactionConverter {
     public static TransactionInfo convert(Transaction transaction) {
@@ -55,6 +56,11 @@ public class TransactionConverter {
                 transactionInfo,
                 acquirerInfo,
                 transaction.getRefundable());
+    }
+
+    public static ClientResponse convertToClientResponse(Transaction transaction) {
+        CustomerInfo customerInfo = CustomerConverter.convert(transaction.getCustomer());
+        return new ClientResponse(customerInfo);
     }
 
 }

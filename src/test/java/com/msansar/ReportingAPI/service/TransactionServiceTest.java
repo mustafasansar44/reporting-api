@@ -3,9 +3,11 @@ package com.msansar.ReportingAPI.service;
 import com.msansar.ReportingAPI.dto.dto.request.TransactionGetRequest;
 import com.msansar.ReportingAPI.dto.dto.request.TransactionQueryRequest;
 import com.msansar.ReportingAPI.dto.dto.request.TransactionReportRequest;
+import com.msansar.ReportingAPI.dto.dto.request.ClientRequest;
 import com.msansar.ReportingAPI.dto.dto.response.TransactionGetResponse;
 import com.msansar.ReportingAPI.dto.dto.response.TransactionQueryResponse;
 import com.msansar.ReportingAPI.dto.dto.response.TransactionReportResponse;
+import com.msansar.ReportingAPI.dto.dto.response.ClientResponse;
 import com.msansar.ReportingAPI.dto.dto.transaction.TransactionReport;
 import com.msansar.ReportingAPI.enums.ErrorCode;
 import com.msansar.ReportingAPI.enums.FilterField;
@@ -480,15 +482,89 @@ class TransactionServiceTest {
     }
 
     @Test
-    public void whenGetTransactionWithInvalidId_thenItShouldThrowIllegalArgumentException() {
-        TransactionGetRequest request = new TransactionGetRequest(null);
-
-        IllegalArgumentException exception = Assertions.assertThrows(
+    public void whenGetTransactionWithInvalidRequest_thenItShouldThrowIllegalArgumentException() {
+        // Test 1: Null ID
+        TransactionGetRequest requestWithNullId = new TransactionGetRequest(null);
+        IllegalArgumentException exception1 = Assertions.assertThrows(
                 IllegalArgumentException.class,
-                () -> transactionService.getTransaction(request)
+                () -> transactionService.getTransaction(requestWithNullId)
         );
+        Assertions.assertEquals("transactionId is mandatory.", exception1.getMessage());
 
-        Assertions.assertEquals("transactionId is mandatory.", exception.getMessage());
+        // Test 2: Empty ID
+        TransactionGetRequest requestWithEmptyId = new TransactionGetRequest("");
+        IllegalArgumentException exception2 = Assertions.assertThrows(
+                IllegalArgumentException.class,
+                () -> transactionService.getTransaction(requestWithEmptyId)
+        );
+        Assertions.assertEquals("transactionId is mandatory.", exception2.getMessage());
+
+        // Test 3: Non-existent ID
+        String nonExistentId = "non-existent-transaction-id";
+        TransactionGetRequest requestWithNonExistentId = new TransactionGetRequest(nonExistentId);
+        when(transactionRepository.findByTransactionId(nonExistentId))
+                .thenReturn(Optional.empty());
+        IllegalArgumentException exception3 = Assertions.assertThrows(
+                IllegalArgumentException.class,
+                () -> transactionService.getTransaction(requestWithNonExistentId)
+        );
+        Assertions.assertEquals("Transaction not found with id: " + nonExistentId, exception3.getMessage());
+        verify(transactionRepository, times(1)).findByTransactionId(nonExistentId);
+    }
+
+    // ==================== getClient Tests ====================
+
+    @Test
+    public void whenGetClientWithValidId_thenItShouldReturnClientResponse() {
+        String transactionId = "1-1444392550-1";
+        ClientRequest request = new ClientRequest(transactionId);
+
+        List<Transaction> transactions = createMockTransactions(1);
+        Transaction transaction = transactions.get(0);
+        transaction.setTransactionId(transactionId);
+        
+        when(transactionRepository.findByTransactionId(transactionId))
+                .thenReturn(Optional.of(transaction));
+
+        ClientResponse response = transactionService.getClient(request);
+
+        verify(transactionRepository, times(1)).findByTransactionId(transactionId);
+        Assertions.assertNotNull(response);
+        Assertions.assertNotNull(response.customerInfo());
+        Assertions.assertEquals("customer0@test.com", response.customerInfo().email());
+        Assertions.assertEquals("customer0", response.customerInfo().billingFirstName());
+        Assertions.assertEquals("lastname0", response.customerInfo().billingLastName());
+    }
+
+    @Test
+    public void whenGetClientWithInvalidRequest_thenItShouldThrowIllegalArgumentException() {
+        // Test 1: Null ID
+        ClientRequest requestWithNullId = new ClientRequest(null);
+        IllegalArgumentException exception1 = Assertions.assertThrows(
+                IllegalArgumentException.class,
+                () -> transactionService.getClient(requestWithNullId)
+        );
+        Assertions.assertEquals("transactionId is mandatory.", exception1.getMessage());
+
+        // Test 2: Empty ID
+        ClientRequest requestWithEmptyId = new ClientRequest("");
+        IllegalArgumentException exception2 = Assertions.assertThrows(
+                IllegalArgumentException.class,
+                () -> transactionService.getClient(requestWithEmptyId)
+        );
+        Assertions.assertEquals("transactionId is mandatory.", exception2.getMessage());
+
+        // Test 3: Non-existent ID
+        String nonExistentId = "non-existent-transaction-id";
+        ClientRequest requestWithNonExistentId = new ClientRequest(nonExistentId);
+        when(transactionRepository.findByTransactionId(nonExistentId))
+                .thenReturn(Optional.empty());
+        IllegalArgumentException exception3 = Assertions.assertThrows(
+                IllegalArgumentException.class,
+                () -> transactionService.getClient(requestWithNonExistentId)
+        );
+        Assertions.assertEquals("Transaction not found with id: " + nonExistentId, exception3.getMessage());
+        verify(transactionRepository, times(1)).findByTransactionId(nonExistentId);
     }
 
     // Helper method to create mock transactions
