@@ -1,0 +1,272 @@
+type: collection.insomnia.rest/5.0
+name: ReportingAPI
+meta:
+  id: wrk_ce7e8a84166948748dab93107f54f4ea
+  created: 1759515158126
+  modified: 1759515158126
+  description: ""
+collection:
+  - url: localhost:8080/api/v3/merchant/user/login
+    name: Login
+    meta:
+      id: req_b568959cf9da492a97b8464ccb7954a7
+      created: 1759567723483
+      modified: 1759831319778
+      isPrivate: false
+      description: ""
+      sortKey: -1759567723483
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"email":"mustafasansar44@gmail.com",
+        	"password":"1"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_82e7f2913ca64ebca0b81b9b79860c2b
+      - name: User-Agent
+        value: insomnia/11.6.1
+        id: pair_550f8d29da334f60a882342ad9b1ec05
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: localhost:8080/api/v3/merchant/user/register
+    name: Register
+    meta:
+      id: req_e1a2f908e8304e2fb20aa09b291f0a6d
+      created: 1759654118903
+      modified: 1759841182070
+      isPrivate: false
+      description: ""
+      sortKey: -1759654118903
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"email":"mustafasansar45@gmail.com",
+        	"password":"1"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/11.6.1
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: localhost:8080/api/v3/transactions/report
+    name: Transaction Report
+    meta:
+      id: req_313b4da9d0294bc8a4c1261c4cc0e339
+      created: 1759666749633
+      modified: 1759832397719
+      isPrivate: false
+      description: ""
+      sortKey: -1759666749633
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "fromDate": "2022-10-01",
+          "toDate": "2025-10-08",
+          "merchantId": null,
+          "acquirerId": null
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_4fc320dc0f2b43aca8b9e06506533dd2
+      - name: User-Agent
+        value: insomnia/11.6.1
+        id: pair_0edeb2b563ca4034ac4f5b9969a6e16c
+      - id: pair_b0fca0baeb1a4bb9b8cd76d96104db67
+        name: Authorization
+        value: Bearer {% response 'body', 'req_b568959cf9da492a97b8464ccb7954a7',
+          'b64::JC50b2tlbg==::46b', 'never', 60 %}
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: localhost:8080/api/v3/transactions/list
+    name: Transaction Query Filter Field Test
+    meta:
+      id: req_acc0fa3f3ade4282a7be38ba3f8be098
+      created: 1759675859842
+      modified: 1759831344784
+      isPrivate: false
+      description: ""
+      sortKey: -1759675859842
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"filterField":"CUSTOMER_EMAIL",
+        	"filterValue": "jane.smith@example.com"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_a88bbee8c53644c198768f1e3f8ff677
+      - name: User-Agent
+        value: insomnia/11.6.1
+        id: pair_65a3705ec0ec4175bc0f36cd7eb4e382
+      - id: pair_efe37ba0f4174b37bbe0b207c0d96d09
+        name: Authorization
+        value: Bearer {% response 'body', 'req_b568959cf9da492a97b8464ccb7954a7',
+          'b64::JC50b2tlbg==::46b', 'never', 60 %}
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: localhost:8080/api/v3/transactions/list
+    name: Transaction Query
+    meta:
+      id: req_566488904ebd4cb1a25fd2774bc3cb42
+      created: 1759753633812
+      modified: 1759836516200
+      isPrivate: false
+      description: ""
+      sortKey: -1759671304737.5
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_a88bbee8c53644c198768f1e3f8ff677
+      - name: User-Agent
+        value: insomnia/11.6.1
+        id: pair_65a3705ec0ec4175bc0f36cd7eb4e382
+      - id: pair_efe37ba0f4174b37bbe0b207c0d96d09
+        name: Authorization
+        value: Bearer {% response 'body', 'req_b568959cf9da492a97b8464ccb7954a7',
+          'b64::JC50b2tlbg==::46b', 'never', 60 %}
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: localhost:8080/api/v3/transaction
+    name: Transaction Get
+    meta:
+      id: req_d9e2915ad719456ea60d457aeca36487
+      created: 1759826757560
+      modified: 1759832630830
+      isPrivate: false
+      description: ""
+      sortKey: -1759675859942
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        		"transactionId": "1000000000-1"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_a88bbee8c53644c198768f1e3f8ff677
+      - name: User-Agent
+        value: insomnia/11.6.1
+        id: pair_65a3705ec0ec4175bc0f36cd7eb4e382
+      - id: pair_efe37ba0f4174b37bbe0b207c0d96d09
+        name: Authorization
+        value: Bearer {% response 'body', 'req_b568959cf9da492a97b8464ccb7954a7',
+          'b64::JC50b2tlbg==::46b', 'never', 60 %}
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: localhost:8080/api/v3/client
+    name: Transaction Client
+    meta:
+      id: req_5d699231126f4108a3240428e0c8cd4b
+      created: 1759829216063
+      modified: 1759832643855
+      isPrivate: false
+      description: ""
+      sortKey: -1759675859892
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"transactionId": "1000000000-1"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_a88bbee8c53644c198768f1e3f8ff677
+      - name: User-Agent
+        value: insomnia/11.6.1
+        id: pair_65a3705ec0ec4175bc0f36cd7eb4e382
+      - id: pair_efe37ba0f4174b37bbe0b207c0d96d09
+        name: Authorization
+        value: Bearer {% response 'body', 'req_b568959cf9da492a97b8464ccb7954a7',
+          'b64::JC50b2tlbg==::46b', 'never', 60 %}
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_13aeba22124cf142f03c1e6f0255948cef1f287c
+    created: 1759515158129
+    modified: 1759515158129
+environments:
+  name: Base Environment
+  meta:
+    id: env_13aeba22124cf142f03c1e6f0255948cef1f287c
+    created: 1759515158127
+    modified: 1759515158127
+    isPrivate: false

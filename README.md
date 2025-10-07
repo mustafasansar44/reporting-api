@@ -2,6 +2,21 @@
 
 Spring Boot ve PostgreSQL kullanılarak geliştirilmiş, JWT tabanlı kimlik doğrulama sistemi içeren bir Raporlama API'sidir.
 
+## 🚀 Hızlı Başlangıç
+
+### 1. Projeyi Çalıştırma
+```bash
+docker-compose up
+```
+
+### 2. API İstekleri için Insomnia Configuration
+`insomnia_export/Insomnia_2025-10-07.yaml` dosyasını Insomnia'ya import edin. Tüm API endpoint'leri hazır şekilde gelir.
+
+### 3. Örnek Veriler
+Hazır veriler için `src/main/resources/data.sql` dosyasına bakabilirsiniz.
+
+---
+
 ## 📋 İçindekiler
 
 - [Gereksinimler](#gereksinimler)
