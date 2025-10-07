@@ -44,30 +44,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         
         try {
             final String jwt = authorizationHeader.substring(7);
-            logger.debug("JWT token: " + jwt);
             
             final String email = jwtUtil.getEmailFromToken(jwt);
-            logger.debug("Email from token: " + email);
             
             if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                logger.debug("Loading user details for email: " + email);
                 UserDetails userDetails = userDetailsService.loadUserByUsername(email);
                 
                 if (jwtUtil.validateToken(jwt)) {
-                    logger.debug("Token is valid, setting authentication");
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                             userDetails, null, userDetails.getAuthorities());
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authToken);
-                    logger.debug("Authentication set successfully");
-                } else {
-                    logger.debug("Token validation failed");
                 }
-            } else {
-                logger.debug("Email is null or authentication already exists");
             }
         } catch (Exception e) {
-            logger.error("Cannot set user authentication: " + e.getMessage(), e);
+            throw new RuntimeException("Cannot set user authentication: " + e.getMessage(), e);
         }
         
         filterChain.doFilter(request, response);

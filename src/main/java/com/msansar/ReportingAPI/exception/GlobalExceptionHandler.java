@@ -1,5 +1,6 @@
 package com.msansar.ReportingAPI.exception;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -74,6 +75,23 @@ public class GlobalExceptionHandler {
             message
         );
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ErrorResponse> handleDataIntegrityViolation(DataIntegrityViolationException ex) {
+        String message = "Error: Merchant User with this email already exists";
+        
+        // Constraint violation detaylarını kontrol et
+        if (ex.getMessage() != null && ex.getMessage().contains("email")) {
+            message = "Error: Merchant User with this email already exists";
+        }
+        
+        ErrorResponse errorResponse = new ErrorResponse(
+            0,
+            "DECLINED",
+            message
+        );
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
     }
 
     @ExceptionHandler(Exception.class)

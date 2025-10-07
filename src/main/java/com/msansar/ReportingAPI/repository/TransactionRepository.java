@@ -40,7 +40,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
             "AND (:operation IS NULL OR t.operation = :operation) " +
             "AND (:paymentMethod IS NULL OR t.paymentMethod = :paymentMethod) " +
             "AND (:errorCode IS NULL OR t.errorCode = :errorCode) " +
-            "AND (:transactionUuid IS NULL OR CAST(t.id AS string) = :transactionUuid) " +
+            "AND (:transactionUuid IS NULL OR t.id = :transactionUuid) " +
             "AND (:customerEmail IS NULL OR t.customer.email = :customerEmail) " +
             "AND (:referenceNo IS NULL OR t.merchant.referenceNo = :referenceNo) " +
             "AND (:cardPan IS NULL OR t.customer.number = :cardPan)")
