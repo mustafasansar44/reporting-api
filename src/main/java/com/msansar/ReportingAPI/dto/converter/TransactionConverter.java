@@ -2,13 +2,13 @@ package com.msansar.ReportingAPI.dto.converter;
 
 import com.msansar.ReportingAPI.enums.Status;
 import com.msansar.ReportingAPI.model.Transaction;
-import com.msansar.ReportingAPI.dto.transaction.TransactionInfo;
-import com.msansar.ReportingAPI.dto.transaction.MerchantFx;
-import com.msansar.ReportingAPI.dto.transaction.CustomerInfo;
-import com.msansar.ReportingAPI.dto.transaction.MerchantInfo;
-import com.msansar.ReportingAPI.dto.transaction.Ipn;
-import com.msansar.ReportingAPI.dto.transaction.AcquirerInfo;
-import com.msansar.ReportingAPI.dto.transaction.TransactionQueryItem;
+import com.msansar.ReportingAPI.dto.dto.transaction.TransactionInfo;
+import com.msansar.ReportingAPI.dto.dto.transaction.MerchantFx;
+import com.msansar.ReportingAPI.dto.dto.transaction.CustomerInfo;
+import com.msansar.ReportingAPI.dto.dto.transaction.MerchantInfo;
+import com.msansar.ReportingAPI.dto.dto.transaction.AcquirerInfo;
+import com.msansar.ReportingAPI.dto.dto.transaction.TransactionQueryItem;
+import com.msansar.ReportingAPI.dto.dto.response.TransactionGetResponse;
 
 public class TransactionConverter {
     public static TransactionInfo convert(Transaction transaction) {
@@ -18,7 +18,7 @@ public class TransactionConverter {
                 transaction.getOperation(),
                 transaction.getOperation().name() + " is APPROVED",
                 transaction.getCreatedAt(),
-                String.valueOf(transaction.getId()));
+                transaction.getTransactionId());
     }
 
     // TransactionQueryResponse
@@ -26,7 +26,6 @@ public class TransactionConverter {
         MerchantFx merchantFx = new MerchantFx(transaction.getAmount(), transaction.getCurrency());
         CustomerInfo customerInfo = CustomerConverter.convert(transaction.getCustomer());
         MerchantInfo merchantInfo = MerchantConverter.convert(transaction.getMerchant());
-        Ipn ipn = new Ipn(transaction.getReceived());
         TransactionInfo transactionInfo = TransactionConverter.convert(transaction);
         AcquirerInfo acquirerInfo = AcquirerConverter.convert(transaction.getAcquirer(), transaction.getPaymentMethod().name());
 
@@ -34,11 +33,28 @@ public class TransactionConverter {
                 merchantFx,
                 customerInfo,
                 merchantInfo,
-                ipn,
+                transaction.getReceived(),
                 transactionInfo,
                 acquirerInfo,
                 transaction.getRefundable(),
                 transaction.getErrorCode());
+    }
+
+    public static TransactionGetResponse convertToGetResponse(Transaction transaction) {
+        MerchantFx merchantFx = new MerchantFx(transaction.getAmount(), transaction.getCurrency());
+        CustomerInfo customerInfo = CustomerConverter.convert(transaction.getCustomer());
+        MerchantInfo merchantInfo = MerchantConverter.convert(transaction.getMerchant());
+        TransactionInfo transactionInfo = TransactionConverter.convert(transaction);
+        AcquirerInfo acquirerInfo = AcquirerConverter.convert(transaction.getAcquirer(), transaction.getPaymentMethod().name());
+
+        return new TransactionGetResponse(
+                merchantFx,
+                customerInfo,
+                merchantInfo,
+                transaction.getReceived(),
+                transactionInfo,
+                acquirerInfo,
+                transaction.getRefundable());
     }
 
 }

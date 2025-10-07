@@ -1,6 +1,6 @@
 package com.msansar.ReportingAPI.dto.converter;
 
-import com.msansar.ReportingAPI.dto.transaction.AcquirerInfo;
+import com.msansar.ReportingAPI.dto.dto.transaction.AcquirerInfo;
 import com.msansar.ReportingAPI.model.Acquirer;
 
 public class AcquirerConverter {

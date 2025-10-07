@@ -1,10 +1,12 @@
 package com.msansar.ReportingAPI.service;
 
-import com.msansar.ReportingAPI.dto.transaction.TransactionQueryRequest;
-import com.msansar.ReportingAPI.dto.transaction.TransactionQueryResponse;
-import com.msansar.ReportingAPI.dto.transaction.TransactionReport;
-import com.msansar.ReportingAPI.dto.transaction.TransactionReportRequest;
-import com.msansar.ReportingAPI.dto.transaction.TransactionReportResponse;
+import com.msansar.ReportingAPI.dto.dto.request.TransactionGetRequest;
+import com.msansar.ReportingAPI.dto.dto.request.TransactionQueryRequest;
+import com.msansar.ReportingAPI.dto.dto.request.TransactionReportRequest;
+import com.msansar.ReportingAPI.dto.dto.response.TransactionGetResponse;
+import com.msansar.ReportingAPI.dto.dto.response.TransactionQueryResponse;
+import com.msansar.ReportingAPI.dto.dto.response.TransactionReportResponse;
+import com.msansar.ReportingAPI.dto.dto.transaction.TransactionReport;
 import com.msansar.ReportingAPI.enums.ErrorCode;
 import com.msansar.ReportingAPI.enums.FilterField;
 import com.msansar.ReportingAPI.enums.Operation;
@@ -31,6 +33,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.time.LocalDate;
 import java.time.ZoneId;
 
@@ -454,6 +457,38 @@ class TransactionServiceTest {
 
         Assertions.assertEquals(1, response.current_page()); // default
         Assertions.assertEquals(25, response.per_page());
+    }
+
+    // ==================== getTransaction Tests ====================
+
+    @Test
+    public void whenGetTransactionWithValidId_thenItShouldReturnTransactionGetResponse() {
+        String transactionId = "a7b3c4d5-e6f7-8901-2345-6789abcdef01";
+        TransactionGetRequest request = new TransactionGetRequest(transactionId);
+
+        List<Transaction> transactions = createMockTransactions(1);
+        Transaction transaction = transactions.get(0);
+        transaction.setTransactionId(transactionId);
+        
+        when(transactionRepository.findByTransactionId(transactionId))
+                .thenReturn(Optional.of(transaction));
+
+        TransactionGetResponse response = transactionService.getTransaction(request);
+
+        verify(transactionRepository, times(1)).findByTransactionId(transactionId);
+        Assertions.assertNotNull(response);
+    }
+
+    @Test
+    public void whenGetTransactionWithInvalidId_thenItShouldThrowIllegalArgumentException() {
+        TransactionGetRequest request = new TransactionGetRequest(null);
+
+        IllegalArgumentException exception = Assertions.assertThrows(
+                IllegalArgumentException.class,
+                () -> transactionService.getTransaction(request)
+        );
+
+        Assertions.assertEquals("transactionId is mandatory.", exception.getMessage());
     }
 
     // Helper method to create mock transactions

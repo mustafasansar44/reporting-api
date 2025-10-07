@@ -1,4 +1,4 @@
-package com.msansar.ReportingAPI.dto;
+package com.msansar.ReportingAPI.dto.dto.transaction;
 
 public record FilterParams(
     String transactionUuid,

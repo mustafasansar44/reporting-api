@@ -1,4 +1,5 @@
-package com.msansar.ReportingAPI.dto.transaction;
+package com.msansar.ReportingAPI.dto.dto.response;
+import com.msansar.ReportingAPI.dto.dto.transaction.TransactionReport;
 import com.msansar.ReportingAPI.enums.Status;
 import java.util.List;
 

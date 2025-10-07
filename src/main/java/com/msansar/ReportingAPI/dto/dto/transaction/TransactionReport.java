@@ -1,4 +1,4 @@
-package com.msansar.ReportingAPI.dto.transaction;
+package com.msansar.ReportingAPI.dto.dto.transaction;
 
 import java.math.BigDecimal;
 

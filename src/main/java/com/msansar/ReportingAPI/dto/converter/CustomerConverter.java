@@ -1,6 +1,6 @@
 package com.msansar.ReportingAPI.dto.converter;
 
-import com.msansar.ReportingAPI.dto.transaction.CustomerInfo;
+import com.msansar.ReportingAPI.dto.dto.transaction.CustomerInfo;
 import com.msansar.ReportingAPI.model.Customer;
 
 public class CustomerConverter {

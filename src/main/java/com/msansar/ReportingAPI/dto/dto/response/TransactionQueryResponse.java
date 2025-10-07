@@ -1,6 +1,8 @@
-package com.msansar.ReportingAPI.dto.transaction;
+package com.msansar.ReportingAPI.dto.dto.response;
 
 import java.util.List;
+
+import com.msansar.ReportingAPI.dto.dto.transaction.TransactionQueryItem;
 
 /**
  * Paginated response for Transaction Query.

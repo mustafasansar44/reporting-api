@@ -4,10 +4,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.msansar.ReportingAPI.dto.auth.LoginRequest;
-import com.msansar.ReportingAPI.dto.auth.LoginResponse;
-import com.msansar.ReportingAPI.dto.auth.RegisterRequest;
-import com.msansar.ReportingAPI.dto.auth.RegisterResponse;
+import com.msansar.ReportingAPI.dto.dto.auth.LoginRequest;
+import com.msansar.ReportingAPI.dto.dto.auth.LoginResponse;
+import com.msansar.ReportingAPI.dto.dto.auth.RegisterRequest;
+import com.msansar.ReportingAPI.dto.dto.auth.RegisterResponse;
 import com.msansar.ReportingAPI.model.Merchant;
 import com.msansar.ReportingAPI.repository.AuthRepository;
 import com.msansar.ReportingAPI.enums.Status;

@@ -3,14 +3,16 @@ package com.msansar.ReportingAPI.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.msansar.ReportingAPI.dto.FilterParams;
 import com.msansar.ReportingAPI.dto.converter.TransactionConverter;
-import com.msansar.ReportingAPI.dto.transaction.TransactionQueryItem;
-import com.msansar.ReportingAPI.dto.transaction.TransactionQueryRequest;
-import com.msansar.ReportingAPI.dto.transaction.TransactionQueryResponse;
-import com.msansar.ReportingAPI.dto.transaction.TransactionReport;
-import com.msansar.ReportingAPI.dto.transaction.TransactionReportRequest;
-import com.msansar.ReportingAPI.dto.transaction.TransactionReportResponse;
+import com.msansar.ReportingAPI.dto.dto.transaction.FilterParams;
+import com.msansar.ReportingAPI.dto.dto.request.TransactionGetRequest;
+import com.msansar.ReportingAPI.dto.dto.response.TransactionGetResponse;
+import com.msansar.ReportingAPI.dto.dto.transaction.TransactionQueryItem;
+import com.msansar.ReportingAPI.dto.dto.request.TransactionQueryRequest;
+import com.msansar.ReportingAPI.dto.dto.response.TransactionQueryResponse;
+import com.msansar.ReportingAPI.dto.dto.transaction.TransactionReport;
+import com.msansar.ReportingAPI.dto.dto.request.TransactionReportRequest;
+import com.msansar.ReportingAPI.dto.dto.response.TransactionReportResponse;
 import com.msansar.ReportingAPI.enums.FilterField;
 import com.msansar.ReportingAPI.enums.Status;
 import com.msansar.ReportingAPI.repository.TransactionRepository;
@@ -77,6 +79,18 @@ public class TransactionService {
         Integer to = pageIndex * perPage + page.getNumberOfElements();
 
         return new TransactionQueryResponse(perPage, currentPage, nextUrl, prevUrl, from, to, items);
+    }
+
+    public TransactionGetResponse getTransaction(TransactionGetRequest request) {
+        String transactionId = request.transactionId();
+        if (transactionId == null || transactionId.isEmpty()) {
+            throw new IllegalArgumentException("transactionId is mandatory.");
+        }
+
+        Transaction transaction = transactionRepository.findByTransactionId(transactionId)
+                .orElseThrow(() -> new IllegalArgumentException("Transaction not found with id: " + transactionId));
+
+        return TransactionConverter.convertToGetResponse(transaction);
     }
 
     /**

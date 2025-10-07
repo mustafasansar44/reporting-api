@@ -1,4 +1,4 @@
-package com.msansar.ReportingAPI.dto.auth;
+package com.msansar.ReportingAPI.dto.dto.auth;
 
 import com.msansar.ReportingAPI.enums.Status;
 

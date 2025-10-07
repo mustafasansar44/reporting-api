@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.msansar.ReportingAPI.dto.auth.LoginRequest;
-import com.msansar.ReportingAPI.dto.auth.LoginResponse;
-import com.msansar.ReportingAPI.dto.auth.RegisterRequest;
-import com.msansar.ReportingAPI.dto.auth.RegisterResponse;
+import com.msansar.ReportingAPI.dto.dto.auth.LoginRequest;
+import com.msansar.ReportingAPI.dto.dto.auth.LoginResponse;
+import com.msansar.ReportingAPI.dto.dto.auth.RegisterRequest;
+import com.msansar.ReportingAPI.dto.dto.auth.RegisterResponse;
 import com.msansar.ReportingAPI.service.AuthService;
 
 import jakarta.validation.Valid;
