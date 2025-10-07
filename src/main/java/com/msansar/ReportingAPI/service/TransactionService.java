@@ -17,6 +17,7 @@ import com.msansar.ReportingAPI.dto.dto.request.ClientRequest;
 import com.msansar.ReportingAPI.dto.dto.response.ClientResponse;
 import com.msansar.ReportingAPI.enums.FilterField;
 import com.msansar.ReportingAPI.enums.Status;
+import com.msansar.ReportingAPI.exception.TransactionNotFoundException;
 import com.msansar.ReportingAPI.repository.TransactionRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -78,16 +79,16 @@ public class TransactionService {
         return new TransactionQueryResponse(perPage, currentPage, nextUrl, prevUrl, from, to, items);
     }
 
-    public TransactionGetResponse getTransaction(TransactionGetRequest request) {
+    public TransactionGetResponse getTransaction(TransactionGetRequest request) {    
         Transaction transaction = transactionRepository.findByTransactionId(request.transactionId())
-                .orElseThrow(() -> new IllegalArgumentException("Transaction not found with id: " + request.transactionId()));
+                .orElseThrow(() -> new TransactionNotFoundException("Transaction not found with id: " + request.transactionId()));
 
         return TransactionConverter.convertToGetResponse(transaction);
     }
 
-    public ClientResponse getClient(ClientRequest request) {
+    public ClientResponse getClient(ClientRequest request) {   
         Transaction transaction = transactionRepository.findByTransactionId(request.transactionId())
-                .orElseThrow(() -> new IllegalArgumentException("Transaction not found with id: " + request.transactionId()));
+                .orElseThrow(() -> new TransactionNotFoundException("Transaction not found with id: " + request.transactionId()));
 
         return TransactionConverter.convertToClientResponse(transaction);
     }

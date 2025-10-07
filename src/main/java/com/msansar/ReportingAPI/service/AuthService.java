@@ -8,6 +8,8 @@ import com.msansar.ReportingAPI.dto.dto.auth.LoginRequest;
 import com.msansar.ReportingAPI.dto.dto.auth.LoginResponse;
 import com.msansar.ReportingAPI.dto.dto.auth.RegisterRequest;
 import com.msansar.ReportingAPI.dto.dto.auth.RegisterResponse;
+import com.msansar.ReportingAPI.exception.InvalidCredentialsException;
+import com.msansar.ReportingAPI.exception.UserAlreadyExistsException;
 import com.msansar.ReportingAPI.model.Merchant;
 import com.msansar.ReportingAPI.repository.AuthRepository;
 import com.msansar.ReportingAPI.enums.Status;
@@ -28,11 +30,11 @@ public class AuthService {
     public ResponseEntity<LoginResponse> login(LoginRequest loginRequest) {
         Merchant user = authRepository
                 .findByEmail(loginRequest.email())
-                .orElseThrow(() -> new RuntimeException("User not found")); // TODO: UserNotFoundException ile değiştirilecek
+                .orElseThrow(() -> new InvalidCredentialsException("Error: Merchant User credentials is not valid"));
         
         // Şifre kontrolü
         if (!passwordEncoder.matches(loginRequest.password(), user.getPassword())) {
-            throw new RuntimeException("Invalid password"); // TODO: Custom exception ile değiştirilecek
+            throw new InvalidCredentialsException("Error: Merchant User credentials is not valid");
         }
         
         String token = jwtUtil.generateToken(user.getEmail());
@@ -40,11 +42,16 @@ public class AuthService {
     }
 
     public ResponseEntity<RegisterResponse> register(RegisterRequest registerRequest) {
+        // Email zaten varsa hata fırlat
+        if (authRepository.findByEmail(registerRequest.email()).isPresent()) {
+            throw new UserAlreadyExistsException("Error: Merchant User with email " + registerRequest.email() + " already exists");
+        }
+        
         String hashedPassword = passwordEncoder.encode(registerRequest.password());
         Merchant user = new Merchant(registerRequest.email(), hashedPassword);
         authRepository.save(user);
         RegisterResponse registerResponse = new RegisterResponse(registerRequest.email(), Status.APPROVED);
-        return ResponseEntity.ok(registerResponse); // TODO: RegisterResponse'u düzeltilebilir.
+        return ResponseEntity.ok(registerResponse);
     }
 
 }
