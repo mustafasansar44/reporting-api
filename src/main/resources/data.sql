@@ -6,24 +6,24 @@
 -- ================================================================
 -- ACQUIRERS (Payment Gateway Providers)
 -- ================================================================
-INSERT INTO acquirers (id, name, code) VALUES (1, 'PaySystem1', 'PS1');
-INSERT INTO acquirers (id, name, code) VALUES (2, 'PaySystem2', 'PS2');
-INSERT INTO acquirers (id, name, code) VALUES (3, 'PaySystem3', 'PS3');
-INSERT INTO acquirers (id, name, code) VALUES (4, 'PaySystem4', 'PS4');
-INSERT INTO acquirers (id, name, code) VALUES (5, 'PaySystem5', 'PS5');
-INSERT INTO acquirers (id, name, code) VALUES (6, 'PaySystem6', 'PS6');
+INSERT INTO acquirers (name, code) VALUES ('PaySystem1', 'PS1');
+INSERT INTO acquirers (name, code) VALUES ('PaySystem2', 'PS2');
+INSERT INTO acquirers (name, code) VALUES ('PaySystem3', 'PS3');
+INSERT INTO acquirers (name, code) VALUES ('PaySystem4', 'PS4');
+INSERT INTO acquirers (name, code) VALUES ('PaySystem5', 'PS5');
+INSERT INTO acquirers (name, code) VALUES ('PaySystem6', 'PS6');
 
 -- ================================================================
 -- MERCHANTS (Businesses accepting payments)
 -- ================================================================
-INSERT INTO merchants (id, email, password, name, reference_no) VALUES (1, 'mustafasansar44@gmail.com', '$2a$10$JEll4CYNvHxgkonkSDnJOeUwWfFW8P5UETRFZIygf.Pab8GgzkPMe', 'Merchant1', 'REF_NO_1');
-INSERT INTO merchants (id, email, password, name, reference_no) VALUES (2, 'mustafasansar45@gmail.com', '$2a$10$JEll4CYNvHxgkonkSDnJOeUwWfFW8P5UETRFZIygf.Pab8GgzkPMe', 'Merchant2', 'REF_NO_2');
-INSERT INTO merchants (id, email, password, name, reference_no) VALUES (3, 'mustafasansar46@gmail.com', '$2a$10$JEll4CYNvHxgkonkSDnJOeUwWfFW8P5UETRFZIygf.Pab8GgzkPMe', 'Merchant3', 'REF_NO_3');
-INSERT INTO merchants (id, email, password, name, reference_no) VALUES (4, 'mustafasansar47@gmail.com', '$2a$10$JEll4CYNvHxgkonkSDnJOeUwWfFW8P5UETRFZIygf.Pab8GgzkPMe', 'Merchant4', 'REF_NO_4');
-INSERT INTO merchants (id, email, password, name, reference_no) VALUES (5, 'mustafasansar48@gmail.com', '$2a$10$JEll4CYNvHxgkonkSDnJOeUwWfFW8P5UETRFZIygf.Pab8GgzkPMe', 'Merchant5', 'REF_NO_5');
-INSERT INTO merchants (id, email, password, name, reference_no) VALUES (6, 'mustafasansar6@gmail.com', '$2a$10$JEll4CYNvHxgkonkSDnJOeUwWfFW8P5UETRFZIygf.Pab8GgzkPMe', 'Merchant6', 'REF_NO_6');
-INSERT INTO merchants (id, email, password, name, reference_no) VALUES (7, 'mustafasansar7@gmail.com', '$2a$10$JEll4CYNvHxgkonkSDnJOeUwWfFW8P5UETRFZIygf.Pab8GgzkPMe', 'Merchant7', 'REF_NO_7');
-INSERT INTO merchants (id, email, password, name, reference_no) VALUES (8, 'mustafasansar8@gmail.com', '$2a$10$JEll4CYNvHxgkonkSDnJOeUwWfFW8P5UETRFZIygf.Pab8GgzkPMe', 'Merchant8', 'REF_NO_8');
+INSERT INTO merchants (email, password, name, reference_no) VALUES ('mustafasansar45@gmail.com', '$2a$10$JEll4CYNvHxgkonkSDnJOeUwWfFW8P5UETRFZIygf.Pab8GgzkPMe', 'Merchant2', 'REF_NO_2');
+INSERT INTO merchants (email, password, name, reference_no) VALUES ('mustafasansar46@gmail.com', '$2a$10$JEll4CYNvHxgkonkSDnJOeUwWfFW8P5UETRFZIygf.Pab8GgzkPMe', 'Merchant3', 'REF_NO_3');
+INSERT INTO merchants (email, password, name, reference_no) VALUES ('mustafasansar44@gmail.com', '$2a$10$JEll4CYNvHxgkonkSDnJOeUwWfFW8P5UETRFZIygf.Pab8GgzkPMe', 'Merchant1', 'REF_NO_1');
+INSERT INTO merchants (email, password, name, reference_no) VALUES ('mustafasansar47@gmail.com', '$2a$10$JEll4CYNvHxgkonkSDnJOeUwWfFW8P5UETRFZIygf.Pab8GgzkPMe', 'Merchant4', 'REF_NO_4');
+INSERT INTO merchants (email, password, name, reference_no) VALUES ('mustafasansar48@gmail.com', '$2a$10$JEll4CYNvHxgkonkSDnJOeUwWfFW8P5UETRFZIygf.Pab8GgzkPMe', 'Merchant5', 'REF_NO_5');
+INSERT INTO merchants (email, password, name, reference_no) VALUES ('mustafasansar6@gmail.com', '$2a$10$JEll4CYNvHxgkonkSDnJOeUwWfFW8P5UETRFZIygf.Pab8GgzkPMe', 'Merchant6', 'REF_NO_6');
+INSERT INTO merchants (email, password, name, reference_no) VALUES ('mustafasansar7@gmail.com', '$2a$10$JEll4CYNvHxgkonkSDnJOeUwWfFW8P5UETRFZIygf.Pab8GgzkPMe', 'Merchant7', 'REF_NO_7');
+INSERT INTO merchants (email, password, name, reference_no) VALUES ('mustafasansar8@gmail.com', '$2a$10$JEll4CYNvHxgkonkSDnJOeUwWfFW8P5UETRFZIygf.Pab8GgzkPMe', 'Merchant8', 'REF_NO_8');
 
 -- ================================================================
 -- CUSTOMERS (End users making purchases)
