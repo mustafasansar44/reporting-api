@@ -32,9 +32,11 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgresqldb:5432/postgresqldb
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
-      SPRING_JPA_HIBERNATE_DDL_AUTO: create-drop
+      SPRING_JPA_HIBERNATE_DDL-AUTO: create-drop
       SPRING_SQL_INIT_MODE: always
-      SPRING_JPA_DEFER_DATASOURCE_INITIALIZATION: "true"
+      SPRING_JPA_DEFER-DATASOURCE-INITIALIZATION: "true"
+      SPRING_JPA_SHOW-SQL: "true"
+      LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SQL: DEBUG
     depends_on:
       postgresqldb:
         condition: service_healthy
